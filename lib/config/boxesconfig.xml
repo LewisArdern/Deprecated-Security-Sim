@@ -1,0 +1,29 @@
+<!-------------------SYSTEMS------------------------- -->
+
+<system number="1" >
+<vulnerability critical="user" access="remote">
+<vulnerability critical="root" access="local">
+<network name="homeonly" />
+</system>
+
+<system number="2" >
+<vulnerability critical="user" access="remote">
+<vulnerability critical="root" access="local">
+<os class="linux">
+<network name="homeonly" />
+<network name="homeonly2" />
+</system>
+
+<system number="3" >
+  <vulnerability class="web" critical="user" access="remote">
+  <vulnerability class="service" critical="root" access="local">
+  <os class="linux">
+  <network name="homeonly2" />
+</system>
+
+
+<interactive_system number="1" >
+<os class="kali-linux">
+<network name="homeonly" />
+<vagrant network="vagrant="config.vm.boot_mode = :gui">
+</system>
