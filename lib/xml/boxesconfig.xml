@@ -1,29 +1,36 @@
 <!-------------------SYSTEMS------------------------- -->
-
+<!-- <systems>
 <system number="1" >
-<vulnerability critical="user" access="remote">
-<vulnerability critical="root" access="local">
-<network name="homeonly" />
-</system>
-
+<vulnerability critical="user" access="remote"></vulnerability>
+<vulnerability critical="root" access="local"></vulnerability>
+<os system="linux" basebox="AddBaseBox" ></os>
+<network name="homeonly"></network>
+</system> -->
+<systems>
 <system number="2" >
-<vulnerability critical="user" access="remote">
-<vulnerability critical="root" access="local">
-<os class="linux">
-<network name="homeonly" />
-<network name="homeonly2" />
+<vulnerabilities>
+<vulnerability critical="user" access="remote"></vulnerability>
+<vulnerability critical="root" access="local"></vulnerability>
+</vulnerabilities>
+<os system="linux" basebox="AddBaseBox" ></os>
+<networks>
+<network name="homeonly" ></network>
+<network name="homeonly2"></network>
+</networks>
 </system>
-
+</systems>
+<!--
 <system number="3" >
-  <vulnerability class="web" critical="user" access="remote">
-  <vulnerability class="service" critical="root" access="local">
-  <os class="linux">
-  <network name="homeonly2" />
+  <vulnerability system="web" critical="user" access="remote"></vulnerability>
+  <vulnerability system="service" critical="root" access="local"></vulnerability>
+ <os system="linux" basebox="AddBaseBox" ></os>
+  <network name="homeonly2"></network>
 </system>
 
 
 <interactive_system number="1" >
-<os class="kali-linux">
-<network name="homeonly" />
-<vagrant network="vagrant="config.vm.boot_mode = :gui">
-</system>
+ <os system="linux" basebox="kali-linux" ></os>
+<network name="homeonly" /></network>
+<!-- <vagrant network="vagrant="config.vm.boot_mode = :gui">
+</interactive_system>
+</systems>-->
