@@ -1,0 +1,32 @@
+<system number="1">
+<vulnerabilities>
+<vulnerability critical="user" access="remote"/>
+<vulnerability critical="root" access="local"/>
+</vulnerabilities>
+<os system="linux" basebox="AddBaseBox"/>
+<networks>
+<network name="homeonly"/>
+<network name="homeonly2"/>
+</networks>
+</system>
+<system number="2">
+<vulnerabilities>
+<vulnerability critical="user" access="remote"/>
+<vulnerability critical="root" access="local"/>
+</vulnerabilities>
+<os system="linux" basebox="AddBaseBox"/>
+<networks>
+<network name="homeonly"/>
+<network name="homeonly2"/>
+</networks>
+</system>
+<system number="3">
+<vulnerabilities>
+<vulnerability critical="user" access="remote"/>
+<vulnerability critical="root" access="local"/>
+</vulnerabilities>
+<os system="linux" basebox="AddBaseBox"/>
+<networks>
+<network name="homeonly2"/>
+</networks>
+</system>
