@@ -1,12 +1,11 @@
 <!-------------------SYSTEMS------------------------- -->
 <systems>
 
-<system number="1" >
+<system number="1" os="linux" basebox="AddBaseBox" >
 <vulnerabilities>
-<vulnerability critical="user" access="remote"></vulnerability>
-<vulnerability critical="root" access="local"></vulnerability>
+<vulnerability critical="user" access="remote" type="webserver"></vulnerability>
+<vulnerability critical="root" access="local" type="samba"></vulnerability>
 </vulnerabilities>
-<os system="linux" basebox="AddBaseBox" ></os>
 <networks>
 <network name="homeonly" ></network>
 <network name="homeonly2"></network>
@@ -14,12 +13,10 @@
 </system>
 
 
-<system number="2" >
+<system number="2" os="linux" basebox="AddBaseBox" >
 <vulnerabilities>
-<vulnerability critical="user" access="remote"></vulnerability>
-<vulnerability critical="root" access="local"></vulnerability>
+<vulnerability critical="root" access="local" type="ftp"></vulnerability>
 </vulnerabilities>
-<os system="linux" basebox="AddBaseBox" ></os>
 <networks>
 <network name="homeonly" ></network>
 <network name="homeonly2"></network>
@@ -27,24 +24,20 @@
 </system>
 
 
-
-<system number="3" >
+<system number="3" os="linux" basebox="AddBaseBox" >
 <vulnerabilities>
-<vulnerability critical="user" access="remote"></vulnerability>
-<vulnerability critical="root" access="local"></vulnerability>
+<vulnerability critical="user" access="remote" type="nfs"></vulnerability>
 </vulnerabilities>
-<os system="linux" basebox="AddBaseBox" ></os>
 <networks>
+<network name="homeonly" ></network>
 <network name="homeonly2"></network>
 </networks>
 </system>
-
-
 
 
 <interactive_system number="1" >
  <os system="linux" basebox="kali-linux" ></os>
-<network name="homeonly" /></network>
+<network name="homeonly" /></network> -->
 <!-- <vagrant network="vagrant="config.vm.boot_mode = :gui">-->
-</interactive_system>
+<!-- </interactive_system> -->
 </systems>

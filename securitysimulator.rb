@@ -10,7 +10,7 @@
 
 require 'getoptlong'
 require 'fileutils'
-require_relative 'lib/xml/xml.rb'
+require_relative 'lib/xml/xmllist.rb'
 
 #require ''
 
@@ -39,18 +39,30 @@ end
 def run
 	puts 'reading configuration file on how many virtual machines you want to create'
 	#create new directory for virtual machines
+	#look into ruby command
 	system  'mkdir /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
 	system  'cd /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
 	
 
 	puts 'spinning up virtual machines'
 	puts 'creating vagrant file'
-	readXML
-	createVagrantFile
+	sys = read_systems_xml
+	puts sys
+	#puts sys.getSystemNumber
+# vulns = readXMLVulns
+# oses = ...
+# solution = createSolution(vulns, osses, systems)
+# writeVagrantFile(solution)
+
+	#createVagrantFile
 
 	puts 'installing vulnerabilities...'
 
 
+end
+
+def config
+	usage
 end
 
 opts = GetoptLong.new(
@@ -66,8 +78,9 @@ opts.each do |opt, arg|
     when '--run'   
     	run
     when '--config'  
-    #implement configuration of xml 
-    	usage
+    	#do a box count increment to next one
+    	#create template config file!
+    	config
         end 
   end
 end
