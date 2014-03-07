@@ -3,6 +3,7 @@ require 'tempfile'
 require 'fileutils'
 
 System = Struct.new(:os, :base, :number, :vulnerability, :networks)
+Vulnerabilities = Struct.new(:critical, :access)
 
 def read_systems_xml
     filename = "/Users/lewisardern/Documents/Security-Simulator/lib/xml/boxesconfig.xml"

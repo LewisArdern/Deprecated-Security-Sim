@@ -1,7 +1,7 @@
 require 'tempfile'
 require 'fileutils'
-exec 
-path = '/Users/lewisardern/Documents/Security\ Simulator/lib/config/dvwa.config'
+
+path = '/Users/lewisardern/Documents/Security-Simulator/projects/'
 temp_file = Tempfile.new('foo')
 begin
   File.open(path, 'r') do |file|

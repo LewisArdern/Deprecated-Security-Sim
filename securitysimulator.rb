@@ -40,8 +40,8 @@ def run
 	puts 'reading configuration file on how many virtual machines you want to create'
 	#create new directory for virtual machines
 	#look into ruby command
-	system  'mkdir /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
-	system  'cd /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
+	#system  'mkdir /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
+	#system  'cd /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
 	
 
 	puts 'spinning up virtual machines'
