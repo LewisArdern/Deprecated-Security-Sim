@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'tempfile'
 require 'fileutils'
-
+#stupid test
 System = Struct.new(:os, :base, :number, :vulnerability, :networks)
 Vulnerabilities = Struct.new(:critical, :access)
 
