@@ -11,7 +11,7 @@
 require 'getoptlong'
 require 'fileutils'
 require_relative 'lib/xml/xmllist.rb'
-
+require_relative 'lib/xml/solution.rb'
 #require ''
 
  ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|  
@@ -42,18 +42,18 @@ def run
 	#look into ruby command
 	#system  'mkdir /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
 	#system  'cd /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
-	
+	# systems = []
+ #  test = []
+ #  networks = []
 
 	puts 'spinning up virtual machines'
 	puts 'creating vagrant file'
-	sys = read_systems_xml
-	puts sys
-	#puts sys.getSystemNumber
-# vulns = readXMLVulns
-# oses = ...
-# solution = createSolution(vulns, osses, systems)
-# writeVagrantFile(solution)
-
+	
+  system_xml = read_systems_xml
+  base_xml = read_bases_xml
+  vulns_xml = read_vulns_xml
+  #created_soltuion = create_solution(system_xml, base_xml, vulns_xml)
+	
 	#createVagrantFile
 
 	puts 'installing vulnerabilities...'

@@ -1,0 +1,7 @@
+<vulnerabilities>
+<vulnerability type="ftp" puppet="add puppet code here" details="This vulnerability does something blahblah"></vulnerability>
+<vulnerability type="wexploitation" puppet="add puppet code here" details="This vulnerability does something blahblah"></vulnerability>
+<vulnerability type="nfs" puppet="add puppet code here" details="This vulnerability does something blahblah"></vulnerability>
+<vulnerability type="samba" puppet="add puppet code here" details="This vulnerability does something blahblah"></vulnerability>
+<vulnerability type="rexploitation" puppet="add puppet code here" details="This vulnerability does something blahblah"></vulnerability>
+</vulnerabilities>

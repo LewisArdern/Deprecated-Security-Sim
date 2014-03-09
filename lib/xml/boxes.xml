@@ -1,0 +1,43 @@
+<!-------------------SYSTEMS------------------------- -->
+<systems>
+
+<system number="1" os="linux" basebox="precise32" >
+<vulnerabilities>
+<vulnerability critical="user" access="remote" type="webserver"></vulnerability>
+<vulnerability critical="root" access="local" type="samba"></vulnerability>
+</vulnerabilities>
+<networks>
+<network name="homeonly" ></network>
+<network name="homeonly2"></network>
+</networks>
+</system>
+
+
+<system number="2" os="linux" basebox="AddBaseBox" >
+<vulnerabilities>
+<vulnerability critical="root" access="local" type="ftp"></vulnerability>
+</vulnerabilities>
+<networks>
+<network name="homeonly" ></network>
+<network name="homeonly2"></network>
+</networks>
+</system>
+
+
+<system number="3" os="linux" basebox="AddBaseBox" >
+<vulnerabilities>
+<vulnerability critical="user" access="remote" type="nfs"></vulnerability>
+</vulnerabilities>
+<networks>
+<network name="homeonly" ></network>
+<network name="homeonly2"></network>
+</networks>
+</system>
+
+
+<interactive_system number="1" >
+ <os system="linux" basebox="kali-linux" ></os>
+<network name="homeonly" /></network> -->
+<!-- <vagrant network="vagrant="config.vm.boot_mode = :gui">-->
+<!-- </interactive_system> -->
+</systems>
