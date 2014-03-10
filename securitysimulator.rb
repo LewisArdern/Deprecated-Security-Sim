@@ -10,8 +10,9 @@
 
 require 'getoptlong'
 require 'fileutils'
-require_relative 'lib/xml/xmllist.rb'
-require_relative 'lib/xml/solution.rb'
+#require_relative 'lib/xml/xmllist.rb'
+#require_relative 'lib/xml/solution.rb'
+require_relative 'system.rb'
 #require ''
 
  ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|  
@@ -42,23 +43,35 @@ def run
 	#look into ruby command
 	#system  'mkdir /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
 	#system  'cd /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
-	# systems = []
- #  test = []
- #  networks = []
 
 	puts 'spinning up virtual machines'
 	puts 'creating vagrant file'
-	
-  system_xml = read_systems_xml
-  base_xml = read_bases_xml
-  vulns_xml = read_vulns_xml
-  #created_soltuion = create_solution(system_xml, base_xml, vulns_xml)
+	systems = []
+ 
+  doc = Nokogiri::XML(File.read(BOXES_DIR))
+  doc.xpath("//systems/system").each do |system|
+    id = system["number"]
+    os = system["os"]
+    base = system["basebox"]
+    vulns = system.css('vulnerabilities vulnerability').collect do |v| 
+       { 'critical' => v['critical'], 'access' => v['access'] } 
+      end
+    networks = system.css('networks network').collect { |n| n['name'] }
+ 
+    systems << System.new(id, os, base, vulns, networks)
+  end
+  systems.each do |s|
+    s.networks
+  end
+  # system_xml = read_systems_xml
+  # base_xml = read_bases_xml
+  # vulns_xml = read_vulns_xml
+  # network_xml = read_network_xml
+  # create_solution(system_xml, base_xml, vulns_xml, network_xml)
 	
 	#createVagrantFile
 
 	puts 'installing vulnerabilities...'
-
-
 end
 
 def config
@@ -81,7 +94,7 @@ opts.each do |opt, arg|
     	#do a box count increment to next one
     	#create template config file!
     	config
-        end 
+      end 
   end
 end
 

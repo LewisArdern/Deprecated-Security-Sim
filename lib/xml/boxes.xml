@@ -12,8 +12,7 @@
 </networks>
 </system>
 
-
-<system number="2" os="linux" basebox="AddBaseBox" >
+<system number="2" os="linux" basebox="CentOS6.3withpuppet" >
 <vulnerabilities>
 <vulnerability critical="root" access="local" type="ftp"></vulnerability>
 </vulnerabilities>
@@ -24,7 +23,7 @@
 </system>
 
 
-<system number="3" os="linux" basebox="AddBaseBox" >
+<system number="3" os="linux" basebox="test" >
 <vulnerabilities>
 <vulnerability critical="user" access="remote" type="nfs"></vulnerability>
 </vulnerabilities>
