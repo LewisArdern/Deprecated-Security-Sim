@@ -3,6 +3,7 @@ def create_solution(system_xml, base_xml, vulns_xml,network_xml)
     known_boxes = list_known_base_boxes(system_xml, base_xml)
     known_vulns = list_known_vulnerabilities(vulns_xml,system_xml)
     known_networks = list_there_known_networks(network_xml,system_xml)
+    #create_vagrant_file(known_boxes,known_vulns,known_networks) 
 end
 
 def list_known_base_boxes(system_xml, base_xml)

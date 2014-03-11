@@ -7,6 +7,9 @@ VULNS_DIR = "#{ROOT_DIR}/lib/xml/vulns.xml"
 BASE_DIR = "#{ROOT_DIR}/lib/xml/bases.xml"
 
 class System
+	attr_reader :id, :os, :base, :vulns, :networks
+
+	#initalizes system variables
     def initialize(id, os, base, vulns=[], networks=[])
         @id = id
         @os = os
@@ -14,13 +17,24 @@ class System
         @vulns = vulns
         @networks = networks
     end
- 
-    def vulns
-        valid_vulns = Conf.vulnerabilities
- 
-        # compare @vulns with valid_vulns and construct a list
-        # of vulnerabilities that are legal.
-    end
+
+    def list_vulns 	
+    	known_vulns = []
+    	valid_vulns = Conf.vulnerabilities
+
+        # this method will loop through and check if type equals to
+        # type that is currently set in boxes.xml
+        @vulns.each do |vuln|
+		  	# boolean to check if valid type matches vuln type etc
+		  	valid_vulns.each do |valid|
+		  		if vuln.type == valid.type
+		  			known_vulns << vuln 
+		  			break
+		  		end
+		  	end
+		end
+		return known_vulns
+	end
  
     def networks
         valid_networks = Conf.networks
@@ -39,15 +53,15 @@ class System
     # it'd be a good idea to move the comparison process into a helper method.
     # self._get_list, inside the Conf class, is a good example of what I mean.
 end
- 
+
 class Network
-    attr_reader :os, :base, :number, :vulnerability, :network
+    attr_accessor :name, :range
 end
 class Basebox
-    attr_reader :name, :os, :distro, :base
+    attr_accessor :name, :os, :distro, :vagrantbase
 end
 class Vulnerability
-    attr_reader :type, :puppet, :details
+    attr_accessor :type, :privilege, :access ,:puppet, :details
 end
  
 class Conf
@@ -75,20 +89,17 @@ class Conf
     def self._get_list(xmlfile, xpath, cls)
         itemlist = []
  
-        obj = cls.new
+        
         doc = Nokogiri::XML(File.read(xmlfile))
         doc.xpath(xpath).each do |item|
+        	obj = cls.new
             item.each do |attr, value|
                 obj.send "#{attr}=", value
             end
+            itemlist << obj
         end
         return itemlist
+        
     end
+
 end
- 
-# This is where things start:
-
-
- 
-# Now you have a list of systems! Loop through it and construct
-# a vagrantfile for each of them.

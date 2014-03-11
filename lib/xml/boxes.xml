@@ -1,10 +1,10 @@
 <!-------------------SYSTEMS------------------------- -->
 <systems>
 
-<system number="1" os="linux" basebox="precise32" >
+<system id="system1" os="linux" basebox="precise32" >
 <vulnerabilities>
-<vulnerability critical="user" access="remote" type="webserver"></vulnerability>
-<vulnerability critical="root" access="local" type="samba"></vulnerability>
+<vulnerability privilege="user" access="remote" type="ftp"></vulnerability>
+<vulnerability privilege="root" access="local" type="samba"></vulnerability>
 </vulnerabilities>
 <networks>
 <network name="homeonly" ></network>
@@ -12,9 +12,9 @@
 </networks>
 </system>
 
-<system number="2" os="linux" basebox="CentOS6.3withpuppet" >
+<system id="system2" os="linux" basebox="CentOS6.3withpuppet" >
 <vulnerabilities>
-<vulnerability critical="root" access="local" type="ftp"></vulnerability>
+<vulnerability privilege="root" access="local" type="ftp"></vulnerability>
 </vulnerabilities>
 <networks>
 <network name="homeonly" ></network>
@@ -23,9 +23,9 @@
 </system>
 
 
-<system number="3" os="linux" basebox="test" >
+<system id="system3" os="linux" basebox="test" >
 <vulnerabilities>
-<vulnerability critical="user" access="remote" type="nfs"></vulnerability>
+<vulnerability privilege="user" access="remote" type="nfs"></vulnerability>
 </vulnerabilities>
 <networks>
 <network name="homeonly" ></network>

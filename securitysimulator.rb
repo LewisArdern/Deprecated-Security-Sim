@@ -13,6 +13,7 @@ require 'fileutils'
 #require_relative 'lib/xml/xmllist.rb'
 #require_relative 'lib/xml/solution.rb'
 require_relative 'system.rb'
+require_relative 'VagrantFileCreator.rb'
 #require ''
 
  ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|  
@@ -50,25 +51,21 @@ def run
  
   doc = Nokogiri::XML(File.read(BOXES_DIR))
   doc.xpath("//systems/system").each do |system|
-    id = system["number"]
+    id = system["id"]
     os = system["os"]
     base = system["basebox"]
     vulns = system.css('vulnerabilities vulnerability').collect do |v| 
-       { 'critical' => v['critical'], 'access' => v['access'] } 
+       { 'privilege' => v['privilege'], 'access' => v['access'], 'type' => v['type'] } 
       end
+      
     networks = system.css('networks network').collect { |n| n['name'] }
  
     systems << System.new(id, os, base, vulns, networks)
   end
-  systems.each do |s|
-    s.networks
-  end
-  # system_xml = read_systems_xml
-  # base_xml = read_bases_xml
-  # vulns_xml = read_vulns_xml
-  # network_xml = read_network_xml
-  # create_solution(system_xml, base_xml, vulns_xml, network_xml)
-	
+  create_vagrant = VagrantFileCreator.new
+  test = []
+  create_vagrant.generate(test)
+
 	#createVagrantFile
 
 	puts 'installing vulnerabilities...'
