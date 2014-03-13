@@ -14,10 +14,32 @@ end
 
 class ERBController
 	attr_accessor :systems
-  def initialize
-  	@systems = []
-  end
-  def get_binding
-  	return binding
-  end
+	def initialize
+		@systems = []
+	end
+	def get_binding
+		return binding
+	end
+end
+
+
+class VagrantFile
+	attr_accessor :bases, :networks, :vulns, :systems
+
+	def initialize(systems)
+		@systems = systems
+	end 
+
+	def save_to_file
+
+	end
+
+	def render
+
+end
+	# config.vm.network "private_network", ip: "192.168.50.4"
+
+	# config.vm.box = "base"
+
+
 end

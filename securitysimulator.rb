@@ -19,7 +19,8 @@ require_relative 'VagrantFileCreator.rb'
  ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|  
   while line = f1.gets
     puts line  
-    end  
+  end  
+end
 
 
 def usage
@@ -54,18 +55,28 @@ def run
     id = system["id"]
     os = system["os"]
     base = system["basebox"]
-    vulns = system.css('vulnerabilities vulnerability').collect do |v| 
-       { 'privilege' => v['privilege'], 'access' => v['access'], 'type' => v['type'] } 
-      end
-      
-    networks = system.css('networks network').collect { |n| n['name'] }
+    vulns = []
+    networks = []
+
+    system.css('vulnerabilities vulnerability').each do |v| 
+        vulnerability = Vulnerability.new
+        vulnerability.privilege = v['privilege']
+        vulnerability.access = v['access']
+        vulnerability.type = v['type']
+        vulns << vulnerability
+    end
+
+    system.css('networks network').each do |n|
+      network = Network.new
+      network.name = n['name']
+      networks << network
+    end
  
     systems << System.new(id, os, base, vulns, networks)
   end
-  create_vagrant = VagrantFileCreator.new
-  test = []
-  create_vagrant.generate(test)
 
+   # vf = VagrantFile(systems)
+   # p vf.render
 	#createVagrantFile
 
 	puts 'installing vulnerabilities...'
@@ -91,7 +102,6 @@ opts.each do |opt, arg|
     	#do a box count increment to next one
     	#create template config file!
     	config
-      end 
   end
 end
 

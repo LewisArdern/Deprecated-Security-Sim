@@ -8,7 +8,6 @@
 </vulnerabilities>
 <networks>
 <network name="homeonly" ></network>
-<network name="homeonly2"></network>
 </networks>
 </system>
 
@@ -28,7 +27,6 @@
 <vulnerability privilege="user" access="remote" type="nfs"></vulnerability>
 </vulnerabilities>
 <networks>
-<network name="homeonly" ></network>
 <network name="homeonly2"></network>
 </networks>
 </system>

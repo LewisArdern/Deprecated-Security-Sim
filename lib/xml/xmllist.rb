@@ -19,8 +19,6 @@ require 'fileutils'
 #   attr_accessor :name, :range
 # end
 
-
-
 # systems = {}
 # bases = {}
 
