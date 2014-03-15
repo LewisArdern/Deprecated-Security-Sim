@@ -1,40 +1,40 @@
 <!-------------------SYSTEMS------------------------- -->
 <systems>
 
-<system id="system1" os="linux" basebox="precise32" >
-<vulnerabilities>
-<vulnerability privilege="user" access="remote" type="ftp"></vulnerability>
-<vulnerability privilege="root" access="local" type="samba"></vulnerability>
-</vulnerabilities>
-<networks>
-<network name="homeonly" ></network>
-</networks>
-</system>
+	<system id="system1" os="linux" basebox="precise32" >
+		<vulnerabilities>
+			<vulnerability privilege="user" access="remote" type="ftp"></vulnerability>
+			<vulnerability privilege="root" access="local" type="samba"></vulnerability>
+		</vulnerabilities>
+		<networks>
+			<network name="homeonly" ></network>
+		</networks>
+	</system>
 
-<system id="system2" os="linux" basebox="CentOS6.3withpuppet" >
-<vulnerabilities>
-<vulnerability privilege="root" access="local" type="ftp"></vulnerability>
-</vulnerabilities>
-<networks>
-<network name="homeonly" ></network>
-<network name="homeonly2"></network>
-</networks>
-</system>
-
-
-<system id="system3" os="linux" basebox="test" >
-<vulnerabilities>
-<vulnerability privilege="user" access="remote" type="nfs"></vulnerability>
-</vulnerabilities>
-<networks>
-<network name="homeonly2"></network>
-</networks>
-</system>
+	<system id="system2" os="linux" basebox="CentOS6.3withpuppet" >
+		<vulnerabilities>
+			<vulnerability privilege="root" access="local" type=""></vulnerability>
+		</vulnerabilities>
+		<networks>
+			<network name="homeonly" ></network>
+			<network name="homeonly2"></network>
+		</networks>
+	</system>
 
 
-<interactive_system number="1" >
- <os system="linux" basebox="kali-linux" ></os>
-<network name="homeonly" /></network> -->
-<!-- <vagrant network="vagrant="config.vm.boot_mode = :gui">-->
-<!-- </interactive_system> -->
-</systems>
+	<system id="system3" os="linux" basebox="test" >
+		<vulnerabilities>
+			<vulnerability privilege="user" access="remote" type=""></vulnerability>
+		</vulnerabilities>
+		<networks>
+			<network name="homeonly2"></network>
+		</networks>
+	</system>
+
+
+	<interactive_system number="1" >
+		<os system="linux" basebox="kali-linux" ></os>
+		<network name="homeonly" /></network> -->
+		<!-- <vagrant network="vagrant="config.vm.boot_mode = :gui">-->
+		<!-- </interactive_system> -->
+	</systems>

@@ -14,6 +14,7 @@ require 'fileutils'
 #require_relative 'lib/xml/solution.rb'
 require_relative 'system.rb'
 require_relative 'VagrantFileCreator.rb'
+require_relative 'Random.rb'
 #require ''
 
  ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|  
@@ -54,7 +55,7 @@ def run
   doc.xpath("//systems/system").each do |system|
     id = system["id"]
     os = system["os"]
-    base = system["basebox"]
+    basebox = system["basebox"]
     vulns = []
     networks = []
 
@@ -72,9 +73,19 @@ def run
       networks << network
     end
  
-    systems << System.new(id, os, base, vulns, networks)
+    systems << System.new(id, os, basebox, vulns, networks)
   end
 
+  #add all methods together create random for networks, bases, and vulns if they do not exist or the user has not specified. 
+  systems.each do |s|
+   if s.is_valid_base == false
+    generate_base(s,Conf.bases)
+   end
+
+  end
+
+  # create_vagrant_file = VagrantFile.new(valid_systems,invalid)
+  # create_vagrant_file = VagrantFile.new(valid_systems)
    # vf = VagrantFile(systems)
    # p vf.render
 	#createVagrantFile

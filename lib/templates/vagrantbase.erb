@@ -5,9 +5,16 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure("2") do |config|
-  <% @systems.each do |system| %>
-  config.vm.define "<%= system.id %>" do |<%= system.id %>|
-    <%= system.id %>.vm.box = "<%= system.base %>"
+  <% systems.each do |s|%>
+  # Begin s.id
+  config.vm.define <% "s.id"  do |s.id|%>
+    <%s.id%>.vm.hostname = "<%"s.id"%>"
+ 
+     <%s.id%>.vm.provider "virtualbox" do |v|
+        v.customize [ "modifyvm", :id, "--cpus", "2" ]
+        v.customize [ "modifyvm", :id, "--memory", "1024" ]
+    end
+
+     <%s.id%>.vm.network "private_network", ip: "<%s.network%>"
   end
-  <% end %>
 end

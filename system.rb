@@ -7,14 +7,15 @@ VULNS_DIR = "#{ROOT_DIR}/lib/xml/vulns.xml"
 BASE_DIR = "#{ROOT_DIR}/lib/xml/bases.xml"
 
 class System
-    # can access from outside of class
-	attr_reader :id, :os, :base
+    # can access from outside of class 
+    attr_accessor :id, :os, :basebox
 
 	#initalizes system variables
-    def initialize(id, os, base, vulns=[], networks=[])
+    def initialize(id, os, basebox, vulns=[], networks=[])
         @id = id
         @os = os
-        @base = base
+        @basebox = basebox
+
         @data = {
          "vulns" => vulns,
          "networks" => networks  
@@ -22,64 +23,62 @@ class System
     end
 
     def list_vulns 	
-		return get_valid("vulns",Conf.vulnerabilities,"type")
+		return get_valid("vulns", Conf.vulnerabilities, "type")
 	end
+
     def list_networks    
-        return get_valid("networks",Conf.networks,"name")
+        return get_valid("networks", Conf.networks, "name")
     end
 
     def get_valid(id, valid_items, key)
         known_item = []
-        p @data[id]
 
         @data[id].each do |item|
             # boolean to check if valid type matches vuln type etc
             valid_items.each do |valid|
                 if item.send(key) == valid.send(key)
-                    known_item << item 
-                    break
+                    known_item << item
+                    break 
                 end
             end
-        end
         return known_item
+        end
+    end
+
+    def add_vuln
+
     end
     
     def is_valid_base
         valid_base = Conf.bases
 
         valid_base.each do |b|
-            if @base == b.vagrantbase
+            if @basebox == b.vagrantbase
                 return true
             end
         end
         return false
     end
-        
-        # compare @bases with valid_bases and construct a list
-        # of bases that are legal.
-
-    def networks
-        valid_networks = Conf.networks
- 
-        # compare @networks with valid_networks and construct a list
-        # of networks that are legal.
-    end
- 
-    # it'd be a good idea to move the comparison process into a helper method.
-    # self._get_list, inside the Conf class, is a good example of what I mean.
 end
+
 
 class Network
     attr_accessor :name, :range
-
 end
-
-
 class Basebox
-    attr_accessor :name, :os, :distro, :vagrantbase
+    attr_accessor :name, :os, :distro, :vagrantbase, :url
 end
 class Vulnerability
     attr_accessor :type, :privilege, :access ,:puppet, :details
+
+    def initialize(type=nil, privilege=nil, access=nil, puppet=nil, details=nil)
+
+        @type = type
+        @privilege = privilege
+        @access = access
+        @puppet = puppet
+        @details = details
+    end
 end
  
 class Conf
@@ -106,7 +105,6 @@ class Conf
  
     def self._get_list(xmlfile, xpath, cls)
         itemlist = []
- 
         
         doc = Nokogiri::XML(File.read(xmlfile))
         doc.xpath(xpath).each do |item|
