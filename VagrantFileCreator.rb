@@ -1,12 +1,18 @@
 require 'erb'
+require_relative 'system.rb'
 
 TEMPLATE_DIR = "#{ROOT_DIR}/lib/templates/vagrantbase.erb"
 
+
 class VagrantFileCreator
+
+  def initialize(systems)
+    @systems = systems
+  end
 	def generate(system)
 	  #turn system into vagrant file
 	 controller = ERBController.new
-	 controller.systems = []
+	 controller.systems = system
 	 template = ERB.new(File.read(TEMPLATE_DIR))
 	 puts template.result(controller.get_binding)
 	end
@@ -23,23 +29,23 @@ class ERBController
 end
 
 
-class VagrantFile
-	attr_accessor :bases, :networks, :vulns, :systems
+# class VagrantFile
+	
+# 	def initialize(systems)
+# 		@systems = systems
+# 	end 
 
-	def initialize(systems)
-		@systems = systems
-	end 
+# 	def save_to_file(file)
+# 		File.open(file, "w+") do |f|
+#     	f.write(render)
+# 	end
 
-	def save_to_file
+# 	def render
+# 	end
 
-	end
+# end
+# 	# config.vm.network "private_network", ip: "192.168.50.4"
 
-	def render
+# 	# config.vm.box = "base"
 
-end
-	# config.vm.network "private_network", ip: "192.168.50.4"
-
-	# config.vm.box = "base"
-
-
-end
+# end

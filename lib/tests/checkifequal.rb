@@ -42,10 +42,17 @@ class TestXMLIsEqual < Test::Unit::TestCase
 	#   known_vulns = []
 
 	#   s = System.new("system1", "linux", "base", dummy_list, [])
-	#   known_vulns = s.list_vulns_from_system
+	#   known_vulns = s.	
 	#   assert_equal(known_vulns.length,1)
 	#   assert_equal(known_vulns[0].type,"ftp")
 	# end
+
+	def test_intersection
+		list1 = [Vulnerability.new("nfs","root", "remote","", ""), Vulnerability.new("ftp","root", "remote","", "")]
+		list2 = [Vulnerability.new("nfs","root", "remote","", ""), Vulnerability.new("samba","root", "remote","", ""), ]
+		p ilist = list1 & list2
+
+	end
 
 	def test_system_vulnerabilities
 		dummy_list = []
@@ -61,10 +68,14 @@ class TestXMLIsEqual < Test::Unit::TestCase
 
 	    
 	    if empty_type.type == ""
+	    	p empty_type
 	    	vuln = generate_vulnerability(empty_type,Conf.vulnerabilities,dummy_list)
+	    	assert_not_match(vuln,"")
 	    end
-	  
-	 	
+	
+	 		 # valid = generate_vulnerability(valid_type,Conf.vulnerabilities,dummy_list)
+	 		 # invalid = generate_vulnerability(invalid_type,Conf.vulnerabilities,dummy_list)
+	 		 # duplicate = generate_vulnerability(valid_type,Conf.vulnerabilities,dummy_list)
 		# 2. Run checks against dummy list to compare
 		# 		a. Randomly choose a vulnerability of any type. Check for duplicates.
 		# 		b. valid type: add to list (if no duplicates)

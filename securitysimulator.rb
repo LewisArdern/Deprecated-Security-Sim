@@ -72,19 +72,31 @@ def run
       network.name = n['name']
       networks << network
     end
- 
-    systems << System.new(id, os, basebox, vulns, networks)
+
+    new_vulns = VulnerabilityManager.process(vulns, Conf.vulnerabilities)
+    # new_networks = NetworkManager.process(networks, Conf.networks)
+
+    systems << System.new(id, os, basebox, new_vulns, networks)
   end
 
   #add all methods together create random for networks, bases, and vulns if they do not exist or the user has not specified. 
   systems.each do |s|
    if s.is_valid_base == false
     generate_base(s,Conf.bases)
+    # v = generate_vulnerability(s,Conf.vulnerabilities)
+    # p generate_network(s,Conf.networks)
+    # s.data.each do |d|
+    #   p d
+    # end
+      # p n.networks
+    
    end
 
+   # create vagrant file
   end
-
-  # create_vagrant_file = VagrantFile.new(valid_systems,invalid)
+    
+  create_vagrant_file = VagrantFileCreator.new(systems)
+  p create_vagrant_file.generate(systems)
   # create_vagrant_file = VagrantFile.new(valid_systems)
    # vf = VagrantFile(systems)
    # p vf.render

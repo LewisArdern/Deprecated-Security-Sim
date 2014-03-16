@@ -1,20 +1,26 @@
+
+<% systems.each do |s| %>
+let me take a selfie <%=s.id%>
+<% end %> 
+
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
-Vagrant.configure("2") do |config|
-  <% systems.each do |s|%>
-  # Begin s.id
-  config.vm.define <% "s.id"  do |s.id|%>
-    <%s.id%>.vm.hostname = "<%"s.id"%>"
- 
-     <%s.id%>.vm.provider "virtualbox" do |v|
-        v.customize [ "modifyvm", :id, "--cpus", "2" ]
-        v.customize [ "modifyvm", :id, "--memory", "1024" ]
-    end
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+<% systems.each do |s| %>
 
-     <%s.id%>.vm.network "private_network", ip: "<%s.network%>"
-  end
+config.vm.define "<%=s.id%>" do |<%=s.id%>|
+    <%=s.id%>.vm.box = "<%=s.basebox%>"
+ end
+# may need to loop through networks since there might be more than 1 
+<%s.network%>.vm.network "private_network", ip: "<%s.range%>"
+
+#then do puppet stuff once i understand it by using the information from vulns.
+
+
+<% end %> 
 end

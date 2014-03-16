@@ -1,3 +1,4 @@
+
 def generate_base(system,bases)
 	box = bases.sample
 	p system.basebox
@@ -5,14 +6,29 @@ def generate_base(system,bases)
 	return system
 end
 
-def generate_vulnerability(system,vulns,list)
-	vuln = vulns.sample 
-	list.each do |l|
-		if vulns.type == l.type
-			return nil
-		else
-		system.type = vuln.type
-		end
-	end
-	return system
+def generate_vulnerability(system,vulns)
+	p system
+ 	# vuln = vulns.sample
+		# if system.type == ""		 
+		# 	system.type = vuln.type
+		# 	return system
+		# end
+	# vulns.each do |v|
+	#     if system.type == ""
+	#        system.type = vuln.type
+	#     # elsif system.type == $valid_type
+	#     #     get a random vulnerability of type $valid_type
+	#     # elsif system.type == $invalid_type
+	#     #     # nothing
+	# 	end
+	# end
 end
+
+# def check_list(vulns,list)
+# 	vuln = vulns.sample 
+# 	if system.type == ""
+# 		checkif
+# 	end
+
+# 	end
+# end
