@@ -1,9 +1,3 @@
-
-<% systems.each do |s| %>
-let me take a selfie <%=s.id%>
-<% end %> 
-
-
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -15,9 +9,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 config.vm.define "<%=s.id%>" do |<%=s.id%>|
     <%=s.id%>.vm.box = "<%=s.basebox%>"
+    <% s.networks.each do |n| %>
+    <%=s.id%>.vm.network "private_network", :ip => <%=n.range%>
+    <% end %> 
  end
 # may need to loop through networks since there might be more than 1 
-<%s.network%>.vm.network "private_network", ip: "<%s.range%>"
+
 
 #then do puppet stuff once i understand it by using the information from vulns.
 

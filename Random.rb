@@ -1,13 +1,13 @@
 
 def generate_base(system,bases)
 	box = bases.sample
-	p system.basebox
+	# p system.basebox
 	system.basebox = box.vagrantbase 
 	return system
 end
 
 def generate_vulnerability(system,vulns)
-	p system
+	
  	# vuln = vulns.sample
 		# if system.type == ""		 
 		# 	system.type = vuln.type

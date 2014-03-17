@@ -17,24 +17,24 @@ require_relative 'VagrantFileCreator.rb'
 require_relative 'Random.rb'
 #require ''
 
- ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|  
+ ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|
   while line = f1.gets
-    puts line  
-  end  
+    puts line
+  end
 end
 
 
 def usage
-  puts 'Usage: 
+  puts 'Usage:
 
    run - creates virtual machines e.g run 10
 
    kill - destoys current session
 
-   ssh - creates a ssh session for specifiec box e.g ssh box1 
+   ssh - creates a ssh session for specifiec box e.g ssh box1
 
    All options options are:
-   --help -h: show 
+   --help -h: show
    --run -r: run
 '
   exit
@@ -50,7 +50,7 @@ def run
 	puts 'spinning up virtual machines'
 	puts 'creating vagrant file'
 	systems = []
- 
+
   doc = Nokogiri::XML(File.read(BOXES_DIR))
   doc.xpath("//systems/system").each do |system|
     id = system["id"]
@@ -59,7 +59,7 @@ def run
     vulns = []
     networks = []
 
-    system.css('vulnerabilities vulnerability').each do |v| 
+    system.css('vulnerabilities vulnerability').each do |v|
         vulnerability = Vulnerability.new
         vulnerability.privilege = v['privilege']
         vulnerability.access = v['access']
@@ -74,29 +74,35 @@ def run
     end
 
     new_vulns = VulnerabilityManager.process(vulns, Conf.vulnerabilities)
-    # new_networks = NetworkManager.process(networks, Conf.networks)
+    new_networks = NetworkManager.process(networks, Conf.networks)
 
-    systems << System.new(id, os, basebox, new_vulns, networks)
+    # new_networks = NetworkManager.process(networks, Conf.networks)
+    systems << System.new(id, os, basebox, new_vulns, new_networks)
   end
 
-  #add all methods together create random for networks, bases, and vulns if they do not exist or the user has not specified. 
-  systems.each do |s|
+  #add all methods together create random for networks, bases, and vulns if they do not exist or the user has not specified.
+
+   systems.each do |s|
    if s.is_valid_base == false
     generate_base(s,Conf.bases)
+   end
+   # p s.list_networks[0].range
+
+
     # v = generate_vulnerability(s,Conf.vulnerabilities)
     # p generate_network(s,Conf.networks)
     # s.data.each do |d|
     #   p d
     # end
       # p n.networks
-    
+
    end
 
    # create vagrant file
-  end
-    
+
   create_vagrant_file = VagrantFileCreator.new(systems)
   p create_vagrant_file.generate(systems)
+
   # create_vagrant_file = VagrantFile.new(valid_systems)
    # vf = VagrantFile(systems)
    # p vf.render
@@ -119,9 +125,9 @@ opts.each do |opt, arg|
   case opt
     when '--help'
       usage
-    when '--run'   
+    when '--run'
     	run
-    when '--config'  
+    when '--config'
     	#do a box count increment to next one
     	#create template config file!
     	config

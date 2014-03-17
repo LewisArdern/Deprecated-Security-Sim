@@ -1,0 +1,25 @@
+ 
+# <!--- from system class -->
+ # def list_vulns
+	# 	return get_valid("vulns", Conf.vulnerabilities, "type")
+	# end
+
+ #    def list_networks
+ #        return get_valid("networks", Conf.networks, "name")
+ #    end
+
+ #    def get_valid(id, valid_items, key)
+ #        known_item = []
+
+ #        @data[id].each do |item|
+ #            # boolean to check if valid type matches vuln type etc
+ #            valid_items.each do |valid|
+ #                if item.send(key) == valid.send(key)
+ #                    known_item << item
+ #                    break
+ #                end
+ #            end
+ #        end
+ #        return known_item
+ #    end
+ # <!---- end --->
