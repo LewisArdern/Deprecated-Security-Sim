@@ -17,7 +17,7 @@ require_relative 'VagrantFileCreator.rb'
 require_relative 'Random.rb'
 #require ''
 
- ips = File.open('lib/commandui/logo/logo.txt', 'r') do |f1|
+File.open('lib/commandui/logo/logo.txt', 'r') do |f1|
   while line = f1.gets
     puts line
   end
@@ -56,9 +56,10 @@ def run
     id = system["id"]
     os = system["os"]
     basebox = system["basebox"]
+    url = system["url"]
     vulns = []
     networks = []
-
+  
     system.css('vulnerabilities vulnerability').each do |v|
         vulnerability = Vulnerability.new
         vulnerability.privilege = v['privilege']
@@ -75,26 +76,17 @@ def run
 
     new_vulns = VulnerabilityManager.process(vulns, Conf.vulnerabilities)
     new_networks = NetworkManager.process(networks, Conf.networks)
-
+    # new_bases = BaseManager.process(basebox, Conf.bases)
     # new_networks = NetworkManager.process(networks, Conf.networks)
-    systems << System.new(id, os, basebox, new_vulns, new_networks)
+    systems << System.new(id, os, basebox, url, new_vulns, new_networks)
   end
 
   #add all methods together create random for networks, bases, and vulns if they do not exist or the user has not specified.
 
    systems.each do |s|
    if s.is_valid_base == false
-    generate_base(s,Conf.bases)
+    results = generate_base(s,Conf.bases)
    end
-   # p s.list_networks[0].range
-
-
-    # v = generate_vulnerability(s,Conf.vulnerabilities)
-    # p generate_network(s,Conf.networks)
-    # s.data.each do |d|
-    #   p d
-    # end
-      # p n.networks
 
    end
 
@@ -102,11 +94,6 @@ def run
 
   create_vagrant_file = VagrantFileCreator.new(systems)
   p create_vagrant_file.generate(systems)
-
-  # create_vagrant_file = VagrantFile.new(valid_systems)
-   # vf = VagrantFile(systems)
-   # p vf.render
-	#createVagrantFile
 
 	puts 'installing vulnerabilities...'
 end

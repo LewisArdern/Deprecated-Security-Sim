@@ -3,6 +3,7 @@ def generate_base(system,bases)
 	box = bases.sample
 	# p system.basebox
 	system.basebox = box.vagrantbase 
+	system.url = box.url
 	return system
 end
 

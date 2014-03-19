@@ -5,16 +5,17 @@ BOXES_DIR = "#{ROOT_DIR}/lib/xml/boxes.xml"
 NETWORKS_DIR = "#{ROOT_DIR}/lib/xml/networks.xml"
 VULNS_DIR = "#{ROOT_DIR}/lib/xml/vulns.xml"
 BASE_DIR = "#{ROOT_DIR}/lib/xml/bases.xml"
-
+MOUNT_DIR = "#{ROOT_DIR}/mount/"
 class System
     # can access from outside of class
-    attr_accessor :id, :os, :basebox, :networks, :vulns
+    attr_accessor :id, :os, :url,:basebox, :networks, :vulns
 
 
 	#initalizes system variables
-    def initialize(id, os, basebox, vulns=[], networks=[])
+    def initialize(id, os, basebox, url, vulns=[], networks=[])
         @id = id
         @os = os
+        @url = url
         @basebox = basebox
         @vulns = vulns
         @networks = networks
@@ -25,6 +26,7 @@ class System
 
         valid_base.each do |b|
             if @basebox == b.vagrantbase
+                @url = b.url
                 return true
             end
         end

@@ -7,12 +7,14 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 <% systems.each do |s| %>
 
-config.vm.define "<%=s.id%>" do |<%=s.id%>|
+  config.vm.define "<%=s.id%>" do |<%=s.id%>|
     <%=s.id%>.vm.box = "<%=s.basebox%>"
+    <%=s.id%>.vm.box_url = "<%=s.url%>"
     <% s.networks.each do |n| %>
     <%=s.id%>.vm.network "private_network", :ip => <%=n.range%>
     <% end %> 
- end
+    <%=s.id%>.vm.synced_folder "<%=MOUNT_DIR%>", "/mount"
+  end
 # may need to loop through networks since there might be more than 1 
 
 
@@ -20,4 +22,11 @@ config.vm.define "<%=s.id%>" do |<%=s.id%>|
 
 
 <% end %> 
+
+  config.vm.define "kali" do |kali|
+    kali.vm.box = "kali"
+	kali.vm.network "public_network"
+	kali.vm.network "private_network", :ip => 172.18.0.0
+	kali.vm.box_url = "http://ftp.sliim-projects.eu/boxes/kali-linux-1.0-amd64.box"
+	end
 end
