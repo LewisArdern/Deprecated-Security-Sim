@@ -1,0 +1,10 @@
+name         'puppet-samba'
+version      '0.0.1'
+
+author       'Lewis Ardern'
+license      ''
+project_page ''
+source       ''
+summary      ''
+description  'Installs and manages samba.'
+

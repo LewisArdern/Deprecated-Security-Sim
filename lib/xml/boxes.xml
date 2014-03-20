@@ -1,6 +1,5 @@
 <!-------------------SYSTEMS------------------------- -->
 <systems>
-
 	<system id="system1" os="linux" basebox="precise32" url="" >
 		<vulnerabilities>
 			<vulnerability privilege="user" access="remote" type="ftp"></vulnerability>

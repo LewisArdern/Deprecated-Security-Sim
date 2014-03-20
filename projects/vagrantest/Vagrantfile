@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "OpenSuse12.3withpuppet"
+  config.vm.box = "puppettest"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -73,11 +73,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
+ config.vm.provision :shell, :inline => "apt-get update --fix-missing"
   config.vm.provision "puppet" do |puppet|
-     puppet.manifests_path = "puppet-vsftpd/manifests"
-     puppet.manifest_file  = "config.pp"
-     puppet.manifest_file  = "init.pp"
-     puppet.manifest_file  = "install.pp"
+     puppet.module_path = "modules"
    end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles

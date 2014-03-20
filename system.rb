@@ -10,7 +10,6 @@ class System
     # can access from outside of class
     attr_accessor :id, :os, :url,:basebox, :networks, :vulns
 
-
 	#initalizes system variables
     def initialize(id, os, basebox, url, vulns=[], networks=[])
         @id = id
