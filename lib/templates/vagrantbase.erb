@@ -11,13 +11,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     <%=s.id%>.vm.box = "<%=s.basebox%>"
     <%=s.id%>.vm.box_url = "<%=s.url%>"
     <% s.networks.each do |n| %>
+    <%grab_system_number = s.id.gsub(/[^0-9]/i, "") %>
+    <% n.range[9..9] = grab_system_number %>            
     <%=s.id%>.vm.network "private_network", :ip => <%=n.range%>
     <% end %> 
     <%=s.id%>.vm.synced_folder "<%=MOUNT_DIR%>", "/mount"
   end
-# may need to loop through networks since there might be more than 1 
-
-
+ 
 #then do puppet stuff once i understand it by using the information from vulns.
 
 

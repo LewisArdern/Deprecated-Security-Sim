@@ -92,11 +92,32 @@ class NetworkManager
         return new_networks.values
     end
 
-    #loop through vulns, fill in missing details if not enough info, choose one at random fill in vulns..
+
+    # def self.sort_network_range(systems)
+    #     sorted_networks = []
+    #     systems.each do |s|
+    #         s.networks.each do |n|
+    #             grab_system_number = s.id.gsub(/[^0-9]/i, "")
+    #             n.range[9..9] = grab_system_number
+    #             sorted_networks << n
+    #         end
+    #     end
+    #     return sorted_networks
+    # end
 end
 
 class Basebox
     attr_accessor :name, :os, :distro, :vagrantbase, :url
+end
+
+class BaseManager
+    def self.generate_base(system,bases)
+        box = bases.sample
+        # p system.basebox
+        system.basebox = box.vagrantbase 
+        system.url = box.url
+    return system
+    end
 end
 
 class Vulnerability
@@ -135,30 +156,30 @@ class VulnerabilityManager
         
         legal_vulns = valid_vulns & vulns
         vulns.each do |vuln|
-            if vuln.type == ""
-                random = valid_vulns.sample
+        if vuln.type == ""
+            random = valid_vulns.sample
+            # valid vulnerability into a new hash map of vulnerabilities 
+            new_vulns[random.id] = random
+        else
+            has_found = false
+            # shuffle randomly selects first match of ftp or nfs and then abandon
+            legal_vulns.shuffle.each do |valid|
+             if vuln.type == valid.type
+                vuln.puppet = valid.puppet unless not vuln.puppet.empty?
+                vuln.privilege = valid.privilege unless not vuln.privilege.empty?
+                vuln.access = valid.access unless not vuln.access.empty?
+                vuln.details = valid.details
                 # valid vulnerability into a new hash map of vulnerabilities 
-                new_vulns[random.id] = random
-            else
-                has_found = false
-                # shuffle randomly selects first match of ftp or nfs and then abandon
-                legal_vulns.shuffle.each do |valid|
-                     if vuln.type == valid.type
-                        vuln.puppet = valid.puppet unless not vuln.puppet.empty?
-                        vuln.privilege = valid.privilege unless not vuln.privilege.empty?
-                        vuln.access = valid.access unless not vuln.access.empty?
-                        vuln.details = valid.details
-                        # valid vulnerability into a new hash map of vulnerabilities 
-                        new_vulns[vuln.id] = vuln
-                        has_found = true
-                        break
-                     end
-                end
-                if not has_found
-                    p "vulnerability was not found please check the xml boxes.xml"
-                    exit
-                end
-            end
+                new_vulns[vuln.id] = vuln
+                has_found = true
+                break
+             end
+        end
+        if not has_found
+            p "vulnerability was not found please check the xml boxes.xml"
+            exit
+        end
+        end
         end
         return new_vulns.values
     end

@@ -14,7 +14,7 @@ require 'fileutils'
 #require_relative 'lib/xml/solution.rb'
 require_relative 'system.rb'
 require_relative 'VagrantFileCreator.rb'
-require_relative 'Random.rb'
+# require_relative 'Random.rb'
 #require ''
 
 File.open('lib/commandui/logo/logo.txt', 'r') do |f1|
@@ -50,7 +50,7 @@ def run
 	puts 'spinning up virtual machines'
 	puts 'creating vagrant file'
 	systems = []
-
+  systems1 = []
   doc = Nokogiri::XML(File.read(BOXES_DIR))
   doc.xpath("//systems/system").each do |system|
     id = system["id"]
@@ -76,8 +76,7 @@ def run
 
     new_vulns = VulnerabilityManager.process(vulns, Conf.vulnerabilities)
     new_networks = NetworkManager.process(networks, Conf.networks)
-    # new_bases = BaseManager.process(basebox, Conf.bases)
-    # new_networks = NetworkManager.process(networks, Conf.networks)
+
     systems << System.new(id, os, basebox, url, new_vulns, new_networks)
   end
 
@@ -85,7 +84,7 @@ def run
 
    systems.each do |s|
    if s.is_valid_base == false
-    results = generate_base(s,Conf.bases)
+     results = BaseManager.generate_base(s,Conf.bases)
    end
 
    end
@@ -120,6 +119,7 @@ opts.each do |opt, arg|
     	config
   end
 end
+
 
 
 

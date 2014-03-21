@@ -21,12 +21,12 @@
 	</system>
 
  
-	<system id="system3" os="linux" basebox="test" url="">
+	<system id="system3" os="linux" basebox="" url="">
 		<vulnerabilities>
 			<vulnerability privilege="user" access="remote" type=""></vulnerability>
 		</vulnerabilities>
 		<networks>
-			<network name="homeonly2"></network>
+			<network name=""></network>
 		</networks>
 	</system>
 
