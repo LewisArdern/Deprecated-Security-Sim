@@ -1,6 +1,6 @@
 <!-------------------SYSTEMS------------------------- -->
 <systems>
-	<system id="system1" os="linux" basebox="precise32" url="" >
+	<system id="system1" os="linux" basebox="puppettest" url="" >
 		<vulnerabilities>
 			<vulnerability privilege="user" access="remote" type="ftp"></vulnerability>
 			<vulnerability privilege="root" access="local" type="samba"></vulnerability>
@@ -10,7 +10,7 @@
 		</networks>
 	</system>
 
-	<system id="system2" os="linux" basebox="CentOS6.3withpuppet" url="">
+	<system id="system2" os="linux" basebox="puppettest" url="">
 		<vulnerabilities>
 			<vulnerability privilege="root" access="local" type=""></vulnerability>
 		</vulnerabilities>
@@ -21,7 +21,7 @@
 	</system>
 
  
-	<system id="system3" os="linux" basebox="" url="">
+	<system id="system3" os="linux" basebox="puppettest" url="">
 		<vulnerabilities>
 			<vulnerability privilege="user" access="remote" type=""></vulnerability>
 		</vulnerabilities>

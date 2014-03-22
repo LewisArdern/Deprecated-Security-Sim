@@ -121,7 +121,7 @@ class BaseManager
 end
 
 class Vulnerability
-    attr_accessor :type, :privilege, :access ,:puppet, :details
+    attr_accessor :type, :privilege, :access ,:puppets, :details
 
     def eql? other
         other.kind_of?(self.class) && @type == other.type
@@ -131,17 +131,19 @@ class Vulnerability
         @type.hash
     end
 
-    def initialize(type="", privilege="", access="", puppet="", details="")
-
+    def initialize(type="", privilege="", access="", puppets=[], details="")
         @type = type
         @privilege = privilege
         @access = access
-        @puppet = puppet
+        @puppets = puppets
         @details = details
     end
 
     def id
         return @type + @privilege + @access
+    end
+    def add_puppet
+
     end
 end
 
@@ -165,7 +167,7 @@ class VulnerabilityManager
             # shuffle randomly selects first match of ftp or nfs and then abandon
             legal_vulns.shuffle.each do |valid|
              if vuln.type == valid.type
-                vuln.puppet = valid.puppet unless not vuln.puppet.empty?
+                vuln.puppets = valid.puppets unless not vuln.puppets.empty?
                 vuln.privilege = valid.privilege unless not vuln.privilege.empty?
                 vuln.access = valid.access unless not vuln.access.empty?
                 vuln.details = valid.details
@@ -214,10 +216,17 @@ class Conf
 
         doc = Nokogiri::XML(File.read(xmlfile))
         doc.xpath(xpath).each do |item|
+            # new class e.g networks
         	obj = cls.new
+            # checks to see if there are children puppet and add string to obj.puppets
+            if defined? obj.puppets
+                item.children.each { |c| obj.puppets << c.text.strip if not c.text.strip.empty? }
+            end
             item.each do |attr, value|
+
                 obj.send "#{attr}=", value
             end
+            # vulnerability item
             itemlist << obj
         end
         return itemlist

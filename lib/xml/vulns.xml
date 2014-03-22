@@ -3,30 +3,33 @@
 		type="ftp"
 		privilege="user"
 		access="remote"
-		puppet="add puppet code here"
-		details="This vulnerability does something blahblah"></vulnerability>
+		details="Anonymous FTP has been installed on this host">
+		<puppet>ftp</puppet>
+	</vulnerability>
 	<vulnerability
 		type="wexploitation"
 		privilege="user"
 		access="remote"
-		puppet="add puppet code here"
-		details="This vulnerability does something blahblah"></vulnerability>
+		details="This vulnerability does something blahblah">
+	</vulnerability>
 	<vulnerability
 		type="nfs"
 		privilege="user"
 		access="remote"
-		puppet="add puppet code here"
-		details="This vulnerability does something blahblah"></vulnerability>
+		details="open NFS mount, can mount entire OS">
+		<puppet>nfs</puppet>
+	</vulnerability>
 	<vulnerability
 		type="samba"
 		privilege="user"
 		access="remote"
-		puppet="add puppet code here"
-		details="This vulnerability does something blahblah"></vulnerability>
+		details="Open samba share">
+		<puppet>samba</puppet>
+	</vulnerability>
 	<vulnerability
 		type="rexploitation"
 		privilege="user"
 		access="remote"
-		puppet="add puppet code here"
-		details="This vulnerability does something blahblah"></vulnerability>
+		details="This vulnerability does something blahblah">
+	</vulnerability>
 </vulnerabilities>

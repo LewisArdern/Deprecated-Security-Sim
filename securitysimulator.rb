@@ -10,12 +10,8 @@
 
 require 'getoptlong'
 require 'fileutils'
-#require_relative 'lib/xml/xmllist.rb'
-#require_relative 'lib/xml/solution.rb'
 require_relative 'system.rb'
 require_relative 'VagrantFileCreator.rb'
-# require_relative 'Random.rb'
-#require ''
 
 File.open('lib/commandui/logo/logo.txt', 'r') do |f1|
   while line = f1.gets
@@ -42,12 +38,7 @@ end
 
 def run
 	puts 'reading configuration file on how many virtual machines you want to create'
-	#create new directory for virtual machines
-	#look into ruby command
-	#system  'mkdir /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
-	#system  'cd /Users/lewisardern/Documents/security-simulator/projects/CTFv2/ '
 
-	puts 'spinning up virtual machines'
 	puts 'creating vagrant file'
 	systems = []
   systems1 = []
@@ -84,7 +75,7 @@ def run
 
    systems.each do |s|
    if s.is_valid_base == false
-     results = BaseManager.generate_base(s,Conf.bases)
+     BaseManager.generate_base(s,Conf.bases)
    end
 
    end
