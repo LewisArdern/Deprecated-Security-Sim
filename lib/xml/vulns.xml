@@ -4,32 +4,53 @@
 		privilege="user"
 		access="remote"
 		details="Anonymous FTP has been installed on this host">
-		<puppet>ftp</puppet>
+		<puppets>
+			<puppet>ftp</puppet>
+		</puppets>
 	</vulnerability>
 	<vulnerability
-		type="wexploitation"
+		type="commandinjection"
 		privilege="user"
 		access="remote"
 		details="This vulnerability does something blahblah">
+		<ports>
+   	   		<port>80</port>
+		</ports>
+		<puppets>
+			<puppet>commandinjection</puppet>
+		</puppets>
 	</vulnerability>
 	<vulnerability
 		type="nfs"
 		privilege="user"
 		access="remote"
 		details="open NFS mount, can mount entire OS">
-		<puppet>nfs</puppet>
+		<puppets>
+			<puppet>nfs</puppet>
+		</puppets>
 	</vulnerability>
 	<vulnerability
 		type="samba"
 		privilege="user"
 		access="remote"
 		details="Open samba share">
-		<puppet>samba</puppet>
+		<puppets>
+			<puppet>samba</puppet>
+		</puppets>
 	</vulnerability>
 	<vulnerability
 		type="rexploitation"
 		privilege="user"
 		access="remote"
 		details="This vulnerability does something blahblah">
+	</vulnerability>
+	<vulnerability
+		type="writeableshadow"
+		privilege="user"
+		access="remote"
+		details="This puppet module edits the chmod of the shadow file to 777.">
+		<puppets>
+			<puppet>writeableshadow</puppet>
+		</puppets>
 	</vulnerability>
 </vulnerabilities>

@@ -20,7 +20,6 @@ class VagrantFileCreator
 		Dir::mkdir("#{PROJECTS_DIR}/Project#{build_number}") unless File.exists?("#{PROJECTS_DIR}/#{build_number}")
 		File.open("#{PROJECTS_DIR}/Project#{build_number}/VagrantFile", 'w') { |file| file.write(template.result(controller.get_binding)) }
 		vagrant_up(build_number)
-		p 'lol'
 	end
 end 
 

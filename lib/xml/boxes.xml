@@ -2,38 +2,10 @@
 <systems>
 	<system id="system1" os="linux" basebox="puppettest" url="" >
 		<vulnerabilities>
-			<vulnerability privilege="user" access="remote" type="ftp"></vulnerability>
-			<vulnerability privilege="root" access="local" type="samba"></vulnerability>
+			<vulnerability privilege="user" access="remote" type="writeableshadow"></vulnerability>
 		</vulnerabilities>
 		<networks>
 			<network name="homeonly" ></network>
 		</networks>
 	</system>
-
-	<system id="system2" os="linux" basebox="puppettest" url="">
-		<vulnerabilities>
-			<vulnerability privilege="root" access="local" type=""></vulnerability>
-		</vulnerabilities>
-		<networks>
-			<network name="homeonly" ></network>
-			<network name="homeonly2"></network>
-		</networks>
-	</system>
-
- 
-	<system id="system3" os="linux" basebox="puppettest" url="">
-		<vulnerabilities>
-			<vulnerability privilege="user" access="remote" type=""></vulnerability>
-		</vulnerabilities>
-		<networks>
-			<network name=""></network>
-		</networks>
-	</system>
-
-
-	<interactive_system number="1" url="">
-		<os system="linux" basebox="kali-linux" ></os>
-		<network name="homeonly" /></network> -->
-		<!-- <vagrant network="vagrant="config.vm.boot_mode = :gui">-->
-		<!-- </interactive_system> -->
-	</systems>
+</systems>

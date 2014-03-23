@@ -5,14 +5,34 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+<% systems.each do |s| %>
+
+  config.vm.define "<%=s.id%>" do |<%=s.id%>|
+    <%=s.id%>.vm.box = "<%=s.basebox%>"
+    <%=s.id%>.vm.box_url = "<%=s.url%>"
+    <% s.networks.each do |n| %>
+    <%grab_system_number = s.id.gsub(/[^0-9]/i, "") %>
+    <% n.range[9..9] = grab_system_number %>            
+    <%=s.id%>.vm.network "private_network", :ip => "<%=n.range%>"
+    <% end %> 
+    <%=s.id%>.vm.synced_folder "<%=MOUNT_DIR%>", "/mount"
+  end
+
+   config.vm.provision :shell, :inline => "apt-get update --fix-missing"
+  config.vm.provision "puppet" do |puppet|
+     puppet.module_path = "<%=ROOT_DIR%>/mount/puppet/modules"
+     puppet.manifests_path = "<%=ROOT_DIR%>/mount/puppet/manifests"
+     <% s.vulns.each do |v| %>
+     <% v.puppets.each do |p| %>
+     puppet.manifest_file = "<%=p%>.pp"
+     <% end %>
+     <% end %>
+   end
+ 
+#then do puppet stuff once i understand it by using the information from vulns.
 
 
-  config.vm.define "kali1" do |kali|
-    kali.vm.box = "kali1"
-    kali.ssh.private_key_path = "~/.ssh/kali-1.0"
-    kali.ssh.username = "root"
-	kali.vm.network "public_network"
-	kali.vm.network "private_network", :ip => "172.18.0.9"
-	kali.vm.box_url = "http://ftp.sliim-projects.eu/boxes/kali-linux-1.0.4-amd64.box"
-	end
+<% end %> 
+
+
 end

@@ -121,7 +121,7 @@ class BaseManager
 end
 
 class Vulnerability
-    attr_accessor :type, :privilege, :access ,:puppets, :details
+    attr_accessor :type, :privilege, :access ,:puppets, :details, :ports
 
     def eql? other
         other.kind_of?(self.class) && @type == other.type
@@ -131,20 +131,19 @@ class Vulnerability
         @type.hash
     end
 
-    def initialize(type="", privilege="", access="", puppets=[], details="")
+    def initialize(type="", privilege="", access="", puppets=[], details="", ports=[])
         @type = type
         @privilege = privilege
         @access = access
         @puppets = puppets
         @details = details
+        @ports = ports
     end
 
     def id
         return @type + @privilege + @access
     end
-    def add_puppet
 
-    end
 end
 
 class VulnerabilityManager
@@ -157,7 +156,9 @@ class VulnerabilityManager
 
         
         legal_vulns = valid_vulns & vulns
+        p vulns, legal_vulns, valid_vulns
         vulns.each do |vuln|
+
         if vuln.type == ""
             random = valid_vulns.sample
             # valid vulnerability into a new hash map of vulnerabilities 
@@ -168,6 +169,7 @@ class VulnerabilityManager
             legal_vulns.shuffle.each do |valid|
              if vuln.type == valid.type
                 vuln.puppets = valid.puppets unless not vuln.puppets.empty?
+                vuln.ports = valid.ports unless not vuln.ports.empty?
                 vuln.privilege = valid.privilege unless not vuln.privilege.empty?
                 vuln.access = valid.access unless not vuln.access.empty?
                 vuln.details = valid.details
@@ -177,10 +179,10 @@ class VulnerabilityManager
                 break
              end
         end
-        if not has_found
-            p "vulnerability was not found please check the xml boxes.xml"
-            exit
-        end
+            if not has_found
+                p "vulnerability was not found please check the xml boxes.xml"
+                exit
+            end
         end
         end
         return new_vulns.values
@@ -219,9 +221,13 @@ class Conf
             # new class e.g networks
         	obj = cls.new
             # checks to see if there are children puppet and add string to obj.puppets
+            # move this to vulnerabilities class
             if defined? obj.puppets
-                item.children.each { |c| obj.puppets << c.text.strip if not c.text.strip.empty? }
+
+                item.xpath("puppets/puppet").each { |c| obj.puppets << c.text.strip if not c.text.strip.empty? }
+                item.xpath("ports/port").each { |c| obj.ports << c.text.strip if not c.text.strip.empty? }
             end
+            # too specific move to vuln class end
             item.each do |attr, value|
 
                 obj.send "#{attr}=", value
@@ -230,6 +236,5 @@ class Conf
             itemlist << obj
         end
         return itemlist
-
     end
 end
