@@ -2,7 +2,7 @@
 <systems>
 	<system id="system1" os="linux" basebox="puppettest" url="" >
 		<vulnerabilities>
-			<vulnerability privilege="user" access="remote" type="writeableshadow"></vulnerability>
+			<vulnerability privilege="user" access="remote" type="commandinjection" cve=""></vulnerability>
 		</vulnerabilities>
 		<networks>
 			<network name="homeonly" ></network>

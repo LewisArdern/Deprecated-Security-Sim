@@ -121,7 +121,7 @@ class BaseManager
 end
 
 class Vulnerability
-    attr_accessor :type, :privilege, :access ,:puppets, :details, :ports
+    attr_accessor :type, :privilege, :access ,:puppets, :details, :ports, :cve
 
     def eql? other
         other.kind_of?(self.class) && @type == other.type
@@ -131,13 +131,14 @@ class Vulnerability
         @type.hash
     end
 
-    def initialize(type="", privilege="", access="", puppets=[], details="", ports=[])
+    def initialize(type="", privilege="", access="", puppets=[], details="", ports=[], cve="")
         @type = type
         @privilege = privilege
         @access = access
         @puppets = puppets
         @details = details
         @ports = ports
+        @cve = cve
     end
 
     def id
@@ -170,6 +171,7 @@ class VulnerabilityManager
              if vuln.type == valid.type
                 vuln.puppets = valid.puppets unless not vuln.puppets.empty?
                 vuln.ports = valid.ports unless not vuln.ports.empty?
+                vuln.cve = valid.cve unless not vuln.cve.empty?
                 vuln.privilege = valid.privilege unless not vuln.privilege.empty?
                 vuln.access = valid.access unless not vuln.access.empty?
                 vuln.details = valid.details

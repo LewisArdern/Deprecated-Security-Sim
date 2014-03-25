@@ -1,6 +1,7 @@
 <vulnerabilities>
 	<vulnerability
 		type="ftp"
+		cve=""
 		privilege="user"
 		access="remote"
 		details="Anonymous FTP has been installed on this host">
@@ -10,6 +11,7 @@
 	</vulnerability>
 	<vulnerability
 		type="commandinjection"
+		cve=""
 		privilege="user"
 		access="remote"
 		details="This vulnerability does something blahblah">
@@ -22,6 +24,7 @@
 	</vulnerability>
 	<vulnerability
 		type="nfs"
+		cve=""
 		privilege="user"
 		access="remote"
 		details="open NFS mount, can mount entire OS">
@@ -31,6 +34,7 @@
 	</vulnerability>
 	<vulnerability
 		type="samba"
+		cve=""
 		privilege="user"
 		access="remote"
 		details="Open samba share">
@@ -40,12 +44,14 @@
 	</vulnerability>
 	<vulnerability
 		type="rexploitation"
+		cve=""
 		privilege="user"
 		access="remote"
 		details="This vulnerability does something blahblah">
 	</vulnerability>
 	<vulnerability
 		type="writeableshadow"
+		cve=""
 		privilege="user"
 		access="remote"
 		details="This puppet module edits the chmod of the shadow file to 777.">

@@ -41,7 +41,6 @@ def run
 
 	puts 'creating vagrant file'
 	systems = []
-  systems1 = []
   doc = Nokogiri::XML(File.read(BOXES_DIR))
   doc.xpath("//systems/system").each do |system|
     id = system["id"]
@@ -54,6 +53,7 @@ def run
     system.css('vulnerabilities vulnerability').each do |v|
         vulnerability = Vulnerability.new
         vulnerability.privilege = v['privilege']
+        vulnerability.cve = v['cve']
         vulnerability.access = v['access']
         vulnerability.type = v['type']
         vulns << vulnerability
@@ -83,7 +83,7 @@ def run
    # create vagrant file
 
   create_vagrant_file = VagrantFileCreator.new(systems)
-  p create_vagrant_file.generate(systems)
+  create_vagrant_file.generate(systems)
 
 	puts 'installing vulnerabilities...'
 end
