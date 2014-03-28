@@ -18,7 +18,7 @@
 		<ports>
    	   		<port>80</port>
 		</ports>
-		<puppets>
+		<puppets>	
 			<puppet>commandinjection</puppet>
 		</puppets>
 	</vulnerability>
@@ -43,13 +43,6 @@
 		</puppets>
 	</vulnerability>
 	<vulnerability
-		type="rexploitation"
-		cve=""
-		privilege="user"
-		access="remote"
-		details="This vulnerability does something blahblah">
-	</vulnerability>
-	<vulnerability
 		type="writeableshadow"
 		cve=""
 		privilege="user"
@@ -57,6 +50,16 @@
 		details="This puppet module edits the chmod of the shadow file to 777.">
 		<puppets>
 			<puppet>writeableshadow</puppet>
+		</puppets>
+	</vulnerability>
+	<vulnerability
+		type="distcc"
+		cve="CVE-2004-2687"
+		privilege="user"
+		access="remote"
+		details="distcc can be exploited by exploit/unix/misc/distcc_exec">
+		<puppets>
+			<puppet>distcc</puppet>
 		</puppets>
 	</vulnerability>
 </vulnerabilities>

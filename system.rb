@@ -91,19 +91,6 @@ class NetworkManager
         end
         return new_networks.values
     end
-
-
-    # def self.sort_network_range(systems)
-    #     sorted_networks = []
-    #     systems.each do |s|
-    #         s.networks.each do |n|
-    #             grab_system_number = s.id.gsub(/[^0-9]/i, "")
-    #             n.range[9..9] = grab_system_number
-    #             sorted_networks << n
-    #         end
-    #     end
-    #     return sorted_networks
-    # end
 end
 
 class Basebox
@@ -225,7 +212,6 @@ class Conf
             # checks to see if there are children puppet and add string to obj.puppets
             # move this to vulnerabilities class
             if defined? obj.puppets
-
                 item.xpath("puppets/puppet").each { |c| obj.puppets << c.text.strip if not c.text.strip.empty? }
                 item.xpath("ports/port").each { |c| obj.ports << c.text.strip if not c.text.strip.empty? }
             end

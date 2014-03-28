@@ -12,27 +12,42 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     <%=s.id%>.vm.box_url = "<%=s.url%>"
     <% s.networks.each do |n| %>
     <%grab_system_number = s.id.gsub(/[^0-9]/i, "") %>
-    <% n.range[9..9] = grab_system_number %>            
-    <%=s.id%>.vm.network "private_network", :ip => "<%=n.range%>"
+    <% n.range[9..9] = grab_system_number %>   
+    <%=s.id%>.vm.network :public_network         
+    <%=s.id%>.vm.network :private_network, :ip => "<%=n.range%>0"
     <% end %> 
     <%=s.id%>.vm.synced_folder "<%=MOUNT_DIR%>", "/mount"
   end
 
-   config.vm.provision :shell, :inline => "apt-get update --fix-missing"
-  config.vm.provision "puppet" do |puppet|
-     puppet.module_path = "<%=ROOT_DIR%>/mount/puppet/modules"
-     puppet.manifests_path = "<%=ROOT_DIR%>/mount/puppet/manifests"
-     <% s.vulns.each do |v| %>
-     <% v.puppets.each do |p| %>
-     puppet.manifest_file = "<%=p%>.pp"
-     <% end %>
-     <% end %>
+  config.vm.provision :shell, :inline => "apt-get update --fix-missing"
+
+  <%s.vulns.each do |v|%>
+  <%v.puppets.each do |p|%>
+  config.vm.provision "puppet" do |<%=p%>|
+     <%=p%>.module_path = "<%=ROOT_DIR%>/mount/puppet/modules"
+     <%=p%>.manifests_path = "<%=ROOT_DIR%>/mount/puppet/manifests"
+
+     <%=p%>.manifest_file = "<%=p%>.pp"
+   <% end %>
+   <% end %>
+   end
+   config.vm.provision "puppet" do |cleanup|
+     cleanup.module_path = "<%=ROOT_DIR%>/mount/puppet/modules"
+     cleanup.manifests_path = "<%=ROOT_DIR%>/mount/puppet/manifests"
+
+     cleanup.manifest_file = "cleanup.pp"
+   
    end
  
-#then do puppet stuff once i understand it by using the information from vulns.
 
+
+     # clean up script which clears history and clobs files together 
+    
+     config.vm.provision :shell, :inline => "history -c && history -w"
 
 <% end %> 
+
+
 
 
 end
