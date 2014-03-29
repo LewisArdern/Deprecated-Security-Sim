@@ -62,4 +62,27 @@
 			<puppet>distcc</puppet>
 		</puppets>
 	</vulnerability>
+		<vulnerability
+		type="ftpbackdoor"
+		cve="CVE-2004-2687"
+		privilege="user"
+		access="remote"
+		details="distcc can be exploited by exploit/unix/misc/distcc_exec">
+		<puppets>
+			<puppet>ftpbackdoor</puppet>
+		</puppets>
+	</vulnerability>
+	<vulnerability
+		type="sqlinjection"
+		cve=""
+		privilege="user"
+		access="remote"
+		details="sqlinjection">
+		<ports>
+   	   		<port>80</port>
+		</ports>
+		<puppets>
+			<puppet>sqlinjection</puppet>
+		</puppets>
+	</vulnerability>
 </vulnerabilities>
