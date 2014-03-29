@@ -70,17 +70,19 @@ You can modify this to whatever range you desire and vagrant will build it.
 
 An example of how the program sets up the ip range for each system:
 
->System1 on homeonly1 - 172.16.0.10 homeonly2 - 172.17.0.10 
->System2 on homeonly1 - 172.16.0.20 - homeonly2 - 172.17.0.20  
+System1
+    * homeonly1 = 172.16.0.10 
+	* homeonly2 - 172.17.0.10 
 
-To see why check out lib/templates/vagrantbase.erb 
+System2 
+	* homeonly1 - 172.16.0.20 
+	* homeonly2 - 172.17.0.20  
+
+The reason why is in lib/templates/vagrantbase.erb  it appends the system number along with a 0 at the end to remove the issue of system1 being on the .1 network.
 
 Bases
 --
-Currently the only tested base is puppettest, however any debian system should work if it has puppet installed, you can add new bases to bases.xml 
-e.g
->	<base name="puppettest" os="linux" distro="CentOS"  url="http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210.box" vagrantbase="puppettest" >
->	</base>
+Currently the only tested base is puppettest, however any debian system should work if it has puppet installed, you can add new bases to bases.xml by following the current structure. 
 
 Vulnerabilities
 --
@@ -102,7 +104,6 @@ A Kali image is built with every project, this is very slow and can be tedious, 
 Contributing
 --
 If you like the idea of Security Simulator, you are more than welcome to contribute to the project.
-
 
 Contact
 --
