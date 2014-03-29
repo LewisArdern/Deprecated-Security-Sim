@@ -11,7 +11,9 @@
 require 'getoptlong'
 require 'fileutils'
 require_relative 'system.rb'
-require_relative 'VagrantFileCreator.rb'
+require_relative 'filecreator.rb'
+require_relative 'systemreader.rb'
+require_relative 'vagrant.rb'
 
 File.open('lib/commandui/logo/logo.txt', 'r') do |f1|
   while line = f1.gets
@@ -40,52 +42,15 @@ def run
 	puts 'reading configuration file on how many virtual machines you want to create'
 
 	puts 'creating vagrant file'
-	systems = []
-  doc = Nokogiri::XML(File.read(BOXES_DIR))
-  doc.xpath("//systems/system").each do |system|
-    id = system["id"]
-    os = system["os"]
-    basebox = system["basebox"]
-    url = system["url"]
-    vulns = []
-    networks = []
-  
-    system.css('vulnerabilities vulnerability').each do |v|
-        vulnerability = Vulnerability.new
-        vulnerability.privilege = v['privilege']
-        vulnerability.cve = v['cve']
-        vulnerability.access = v['access']
-        vulnerability.type = v['type']
-        vulns << vulnerability
-    end
+  # uses nokogoiri to grab all the system information from boxes.xml
+  systems = SystemReader.new(BOXES_XML).systems
 
-    system.css('networks network').each do |n|
-      network = Network.new
-      network.name = n['name']
-      networks << network
-    end
+   # create's vagrant file / report a starts the vagrant installation'
+  create_files = FileCreator.new(systems)
+  build_number = create_files.generate(systems)
 
-    new_vulns = VulnerabilityManager.process(vulns, Conf.vulnerabilities)
-    new_networks = NetworkManager.process(networks, Conf.networks)
-
-    systems << System.new(id, os, basebox, url, new_vulns, new_networks)
-  end
-
-  #add all methods together create random for networks, bases, and vulns if they do not exist or the user has not specified.
-
-   systems.each do |s|
-   if s.is_valid_base == false
-     BaseManager.generate_base(s,Conf.bases)
-   end
-
-   end
-
-   # create's vagrant file 
-
-  create_vagrant_file = VagrantFileCreator.new(systems)
-  create_vagrant_file.generate(systems)
-
-	puts 'installing vulnerabilities...'
+  vagrant = VagrantController.new
+  vagrant.vagrant_up(build_number)
 end
 
 def config

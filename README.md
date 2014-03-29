@@ -1,9 +1,6 @@
 
 Security-Simulator 
 ==
-Security Simulator is released under a BSD-style license. 
-
-The latest version of this software is available from
 
 Summary
 --
@@ -12,13 +9,16 @@ Security Simulator is a ruby application developed by Lewis Ardern for his Final
 
 Boxes like Metasploitable2 are always the same, this project uses Vagrant, Puppet, and Ruby to create vulnerable virtual machines quickly that can be used for learning or CTF events. 
 
-Installing
+Requirements
 --
 For now you will need to install the following:
 
 Vagrant: http://www.vagrantup.com/
+
 Ruby: https://www.ruby-lang.org/en/
+
 Nokogiri: http://nokogiri.org/tutorials/installing_nokogiri.html
+
 Puppet is not required on your local machine, the boxes that you use will need to have puppet installed on them the main box used has been from puppetlabs: http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210.box
 
 Testing
@@ -29,33 +29,104 @@ OSx Version 10.8.5
 Vagrant 1.5.0
 nokogiri (1.6.1)
 ruby 2.0.0p195 (2013-05-14 revision 40734) [x86_64-darwin12.5.0]
-
+basebox = puppettest - http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210.box
 It should work on most linux distros but if there are any problems contact me.
 
 Usage
 --
 Currently there is no user interface, so you will need to modify the XML to create virtual machines. To run the default-setup all you need to do is:
 
-ruby securitysimulator.rb -r  this will create you a new project in /projects and will create a Vagrant File / Report for you to view and see what has been installed, this will also give you a feel for how Vagrant spins up virtual machines. 
+ruby securitysimulator.rb -r  
 
-Creating Addtional boxes and vulnerabilities
+This will create you a new project in /projects and will create a Vagrant File / Report for you to view and see what has been installed, this will also give you a feel for how Vagrant spins up virtual machines. 
+
+Puppet
 --
 
-if you want to create additional boxes, vulnerabilities, refer to lib/xml
+mount/puppet/module 
+contains all currently useable puppet module some self-created some taken from https://forge.puppetlabs.com/
 
-you need to modify boxes.xml to add additional boxes to build 
+mount/puppet/manifests
+contains all the includes and modifications that are used to create vulnerabilities e.g 
 
-vulns.xml has the known vulnerabilities that you can currently build with this project, you can either specify them or leave it blank and it will automatically generate one for you.
+include nfslewis::config 
 
-bases.xml have to known boxes that have bases however 'puppettest' was used to create everything which is based on CentOS. http://www.vagrantbox.es has a list of working boxes that you can download.
+which includes all of the class information of nfslewis and config.pp 
 
-networks.xml has the known ranges for this project, the ip is currently modified in lib/templates/vagrantbase.erb on line 17.
+to learn more about puppet check out http://puppetlabs.com/
 
-Demo
+Boxes
 --
-If you look under the projects folder there is Project1, if you go into this folder and write 'vagrant up' you will see how the process works. 'Video will be created to explain this further', but will be a good first step in understanding how the project works.
+by default the 'system machines' are specified to boxes.xml you will need to modify this file to create a new system e.g. 
+
+<system id="system2" os="linux" basebox="puppettest" url="" >
+		<vulnerabilities>
+			<vulnerability privilege="user" access="remote" type="distcc" cve=""></vulnerability>
+			<vulnerability privilege="user" access="remote" type="nfs" cve=""></vulnerability>
+			<vulnerability privilege="user" access="remote" type="ftpbackdoor" cve=""></vulnerability>
+		</vulnerabilities>
+		<networks>
+			<network name="homeonly" ></network>
+		</networks>
+</system>
+
+<system id="system3" os="linux" basebox="puppettest" url="" >
+		<vulnerabilities>
+			<vulnerability privilege="user" access="remote" type="ftp" cve=""></vulnerability>
+			<vulnerability privilege="user" access="remote" type="" cve=""></vulnerability>
+			<vulnerability privilege="user" access="remote" type="ftpbackdoor" cve=""></vulnerability>
+		</vulnerabilities>
+		<networks>
+			<network name="" ></network>
+		</networks>
+</system>
+
+each system must be incremented by system3, system4, etc to work. Each vulnerability must match a type from vulns.xml or be blank or you will be returned an error. 
+
+Networking
+--
+by default the networking is specified in networks.xml you will need to modify the range to you want. Each network is set to a range e.g:
+
+<network name="homeonly" range="172.16.0.0"></network>
+
+You can modify this to whatever range you desire and vagrant will build it.
+
+An example of how the program sets up the ip range for each system:
+
+System1 on homeonly1 - 172.16.0.10 - homeonly2 - 172.17.0.10 
+System2 on homeonly1 - 172.16.0.20 - homeonly2 - 172.17.0.20  
+
+To see why check out lib/templates/vagrantbase.erb 
+
+Bases
+--
+Currently the only tested base is puppettest, however any debian system should work if it has puppet installed, you can add new bases to bases.xml 
+e.g
+>	<base name="puppettest" os="linux" distro="CentOS"  url="http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210.box" vagrantbase="puppettest" >
+>	</base>
+
+Vulnerabilities
+--
+Vulnerabilities are specified in vulns.xml, these are the 'useable' vulnerabilities currently, so when specifing vulnerabilities in boxes.xml you must use from this list or leave the name blank. current automated vulnerabilities are:
+	
+>ftp
+>commandinjection
+>nfs
+>samba
+>writeableshadow
+>distcc
+>ftpbackdoor
+>sqlinjection
+
+Kali
+--
+A Kali image is built with every project, this is very slow and can be tedious, if you already have your own hack lab then you can remove this, but you will need to modify your IP address so it is on the network range, or modify networks.xml.
 
 Contributing
 --
-If you like the idea of Security Simulator, you are more than welcome to commit to the project.
+If you like the idea of Security Simulator, you are more than welcome to contribute to the project.
 
+
+Contact
+--
+If you need to reach me my email is: lewisardern [at] live.co.uk

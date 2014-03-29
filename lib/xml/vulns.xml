@@ -14,7 +14,7 @@
 		cve=""
 		privilege="user"
 		access="remote"
-		details="This vulnerability does something blahblah">
+		details="command injection from webserver /var/www/commandinjection">
 		<ports>
    	   		<port>80</port>
 		</ports>
@@ -64,10 +64,10 @@
 	</vulnerability>
 		<vulnerability
 		type="ftpbackdoor"
-		cve="CVE-2004-2687"
+		cve=""
 		privilege="user"
 		access="remote"
-		details="distcc can be exploited by exploit/unix/misc/distcc_exec">
+		details="ftpbackdoor smiley face backdoor exploit">
 		<puppets>
 			<puppet>ftpbackdoor</puppet>
 		</puppets>
@@ -77,7 +77,7 @@
 		cve=""
 		privilege="user"
 		access="remote"
-		details="sqlinjection">
+		details="sqlinjection 'isn't 100% automated you stil need to set up the tables. viewable from /var/www/sqlinjection">
 		<ports>
    	   		<port>80</port>
 		</ports>

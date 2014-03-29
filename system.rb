@@ -1,11 +1,13 @@
 require 'nokogiri'
+# assign constants
 ROOT_DIR = File.dirname(__FILE__)
 
-BOXES_DIR = "#{ROOT_DIR}/lib/xml/boxes.xml"
-NETWORKS_DIR = "#{ROOT_DIR}/lib/xml/networks.xml"
-VULNS_DIR = "#{ROOT_DIR}/lib/xml/vulns.xml"
-BASE_DIR = "#{ROOT_DIR}/lib/xml/bases.xml"
+BOXES_XML = "#{ROOT_DIR}/lib/xml/boxes.xml"
+NETWORKS_XML = "#{ROOT_DIR}/lib/xml/networks.xml"
+VULN_XML = "#{ROOT_DIR}/lib/xml/vulns.xml"
+BASE_XML = "#{ROOT_DIR}/lib/xml/bases.xml"
 MOUNT_DIR = "#{ROOT_DIR}/mount/"
+
 class System
     # can access from outside of class
     attr_accessor :id, :os, :url,:basebox, :networks, :vulns
@@ -49,6 +51,7 @@ class Network
     end
 
     def eql? other
+        # checks if name matches networks.xml from boxes.xml
         other.kind_of?(self.class) && @name == other.name
     end
 
@@ -58,26 +61,23 @@ class Network
 end
 
 class NetworkManager
-    # the user will either specify a blank vulnerability type due to specifying A vulnerability
-    # or they will specify a type, for the demo if the type hasn't been spelled correctly then its for the user to fix
-    # logic will be put in place to give some form of error handling
-    # it also needs to report to the user what kind of vulnerabilities are being made for each host..
+    # the user will either specify a blank network type or a knownnetwork type
     def self.process(networks,valid_network)
         new_networks = {}
-
+        # intersection of valid networks / user defined networks
         legal_networks = valid_network & networks
         networks.each do |network|
+            # checks to see string is blank if so valid network into a new hash map of vulnerabilities 
             if network.name == ""
                 random = valid_network.sample
-                # valid vulnerability into a new hash map of vulnerabilities 
                  new_networks[random.id] = random
             else
                 has_found = false
-                # shuffle randomly selects first match of ftp or nfs and then abandon
+                # shuffle randomly selects first match 
                 legal_networks.shuffle.each do |valid|
                      if network.name == valid.name
                         network.range = valid.range unless not network.range.empty?
-                        # valid vulnerability into a new hash map of vulnerabilities 
+                        # valid network into a new hash map of networks 
                         new_networks[network.id] = network
                         has_found = true
                         break
@@ -99,8 +99,8 @@ end
 
 class BaseManager
     def self.generate_base(system,bases)
+        # takes a sample from bases.xml and then assigns it to system 
         box = bases.sample
-        # p system.basebox
         system.basebox = box.vagrantbase 
         system.url = box.url
     return system
@@ -111,6 +111,7 @@ class Vulnerability
     attr_accessor :type, :privilege, :access ,:puppets, :details, :ports, :cve
 
     def eql? other
+        # checks if type matches vulns.xml from boxes.xml
         other.kind_of?(self.class) && @type == other.type
     end
 
@@ -135,16 +136,13 @@ class Vulnerability
 end
 
 class VulnerabilityManager
-    # the user will either specify a blank vulnerability type due to specifying A vulnerability
-    # or they will specify a type, for the demo if the type hasn't been spelled correctly then its for the user to fix
-    # logic will be put in place to give some form of error handling
-    # it also needs to report to the user what kind of vulnerabilities are being made for each host..
+    # the user will either specify a blank vulnerability or will check it against vulns.xml and will append 
+    # specific information to system if the system information is empty
     def self.process(vulns,valid_vulns)
         new_vulns = {}
 
         
         legal_vulns = valid_vulns & vulns
-        p vulns, legal_vulns, valid_vulns
         vulns.each do |vuln|
 
         if vuln.type == ""
@@ -169,7 +167,7 @@ class VulnerabilityManager
              end
         end
             if not has_found
-                p "vulnerability was not found please check the xml boxes.xml"
+                STDERR.puts "vulnerability was not found please check the xml boxes.xml"
                 exit
             end
         end
@@ -181,25 +179,27 @@ class VulnerabilityManager
 end
 
 class Conf
+    # this class uses nokogiri to grab all of the information from network.xml, bases.xml, and vulns.xml
+    # then adds them to their specific class to do checking for legal in Manager.process
     def self.networks
         if defined? @@networks
             return @@networks
         end
-        return @@networks = self._get_list(NETWORKS_DIR, "//networks/network", Network)
+        return @@networks = self._get_list(NETWORKS_XML, "//networks/network", Network)
     end
 
     def self.bases
         if defined? @@bases
             return @@bases
         end
-        return @@bases = self._get_list(BASE_DIR, "//bases/base", Basebox)
+        return @@bases = self._get_list(BASE_XML, "//bases/base", Basebox)
     end
 
     def self.vulnerabilities
         if defined? @@vulnerabilities
             return @@vulnerabilities
         end
-        return @@vulnerabilities = self._get_list(VULNS_DIR, "//vulnerabilities/vulnerability", Vulnerability)
+        return @@vulnerabilities = self._get_list(VULN_XML, "//vulnerabilities/vulnerability", Vulnerability)
     end
 
     def self._get_list(xmlfile, xpath, cls)
