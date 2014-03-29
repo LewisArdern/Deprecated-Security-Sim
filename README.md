@@ -59,42 +59,19 @@ Boxes
 --
 by default the 'system machines' are specified to boxes.xml you will need to modify this file to create a new system e.g. 
 
-><system id="system2" os="linux" basebox="puppettest" url="" >
->		<vulnerabilities>
->			<vulnerability privilege="user" access="remote" type="distcc" cve=""></vulnerability>
->			<vulnerability privilege="user" access="remote" type="nfs" cve=""></vulnerability>
->			<vulnerability privilege="user" access="remote" type="ftpbackdoor" cve=""></vulnerability>
->		</vulnerabilities>
->		<networks>
->			<network name="homeonly" ></network>
->		</networks>
-></system>
-
-<system id="system3" os="linux" basebox="puppettest" url="" >
-		<vulnerabilities>
-			<vulnerability privilege="user" access="remote" type="ftp" cve=""></vulnerability>
-			<vulnerability privilege="user" access="remote" type="" cve=""></vulnerability>
-			<vulnerability privilege="user" access="remote" type="ftpbackdoor" cve=""></vulnerability>
-		</vulnerabilities>
-		<networks>
-			<network name="" ></network>
-		</networks>
-</system>
-
 each system must be incremented by system3, system4, etc to work. Each vulnerability must match a type from vulns.xml or be blank or you will be returned an error. 
 
 Networking
 --
 by default the networking is specified in networks.xml you will need to modify the range to you want. Each network is set to a range e.g:
 
-<network name="homeonly" range="172.16.0.0"></network>
 
 You can modify this to whatever range you desire and vagrant will build it.
 
 An example of how the program sets up the ip range for each system:
 
-System1 on homeonly1 - 172.16.0.10 - homeonly2 - 172.17.0.10 
-System2 on homeonly1 - 172.16.0.20 - homeonly2 - 172.17.0.20  
+>System1 on homeonly1 - 172.16.0.10 homeonly2 - 172.17.0.10 
+>System2 on homeonly1 - 172.16.0.20 - homeonly2 - 172.17.0.20  
 
 To see why check out lib/templates/vagrantbase.erb 
 
