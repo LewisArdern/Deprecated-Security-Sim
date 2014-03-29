@@ -109,14 +109,14 @@ Vulnerabilities
 --
 Vulnerabilities are specified in vulns.xml, these are the 'useable' vulnerabilities currently, so when specifing vulnerabilities in boxes.xml you must use from this list or leave the name blank. current automated vulnerabilities are:
 	
->ftp
->commandinjection
->nfs
->samba
->writeableshadow
->distcc
->ftpbackdoor
->sqlinjection
+  * ftp
+  * commandinjection
+  * nfs
+  * samba
+  * writeableshadow
+  * distcc
+  * ftpbackdoor
+  * sqlinjection
 
 Kali
 --
