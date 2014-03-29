@@ -25,11 +25,12 @@ Testing
 --
 While creatng this application I used the following:
 
-OSx Version 10.8.5
-Vagrant 1.5.0
-nokogiri (1.6.1)
-ruby 2.0.0p195 (2013-05-14 revision 40734) [x86_64-darwin12.5.0]
-basebox = puppettest - http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210.box
+	OSx Version 10.8.5
+	Vagrant 1.5.0
+	nokogiri (1.6.1)
+	ruby 2.0.0p195 (2013-05-14 revision 40734) [x86_64-darwin12.5.0]
+	basebox = puppettest - http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210.box
+	
 It should work on most linux distros but if there are any problems contact me.
 
 Usage
