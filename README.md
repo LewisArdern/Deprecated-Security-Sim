@@ -71,12 +71,14 @@ You can modify this to whatever range you desire and vagrant will build it.
 An example of how the program sets up the ip range for each system:
 
 System1
+
     * homeonly1 = 172.16.0.10 
-	* homeonly2 - 172.17.0.10 
+	* homeonly2 = 172.17.0.10 
 
 System2 
-	* homeonly1 - 172.16.0.20 
-	* homeonly2 - 172.17.0.20  
+
+	* homeonly1 = 172.16.0.20 
+	* homeonly2 = 172.17.0.20  
 
 The reason why is in lib/templates/vagrantbase.erb  it appends the system number along with a 0 at the end to remove the issue of system1 being on the .1 network.
 
