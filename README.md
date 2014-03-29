@@ -59,16 +59,16 @@ Boxes
 --
 by default the 'system machines' are specified to boxes.xml you will need to modify this file to create a new system e.g. 
 
-<system id="system2" os="linux" basebox="puppettest" url="" >
-		<vulnerabilities>
-			<vulnerability privilege="user" access="remote" type="distcc" cve=""></vulnerability>
-			<vulnerability privilege="user" access="remote" type="nfs" cve=""></vulnerability>
-			<vulnerability privilege="user" access="remote" type="ftpbackdoor" cve=""></vulnerability>
-		</vulnerabilities>
-		<networks>
-			<network name="homeonly" ></network>
-		</networks>
-</system>
+><system id="system2" os="linux" basebox="puppettest" url="" >
+>		<vulnerabilities>
+>			<vulnerability privilege="user" access="remote" type="distcc" cve=""></vulnerability>
+>			<vulnerability privilege="user" access="remote" type="nfs" cve=""></vulnerability>
+>			<vulnerability privilege="user" access="remote" type="ftpbackdoor" cve=""></vulnerability>
+>		</vulnerabilities>
+>		<networks>
+>			<network name="homeonly" ></network>
+>		</networks>
+></system>
 
 <system id="system3" os="linux" basebox="puppettest" url="" >
 		<vulnerabilities>
