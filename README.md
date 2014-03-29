@@ -53,7 +53,7 @@ include nfslewis::config
 
 which includes all of the class information of nfslewis and config.pp 
 
-to learn more about puppet check out http://puppetlabs.com/
+to learn more about puppet and understand the code check out http://puppetlabs.com/
 
 Boxes
 --
@@ -72,13 +72,13 @@ An example of how the program sets up the ip range for each system:
 
 System1
 
-    * homeonly1 = 172.16.0.10 
-	* homeonly2 = 172.17.0.10 
+    homeonly1 = 172.16.0.10 
+	homeonly2 = 172.17.0.10 
 
 System2 
 
-	* homeonly1 = 172.16.0.20 
-	* homeonly2 = 172.17.0.20  
+	homeonly1 = 172.16.0.20 
+	homeonly2 = 172.17.0.20  
 
 The reason why is in lib/templates/vagrantbase.erb  it appends the system number along with a 0 at the end to remove the issue of system1 being on the .1 network.
 
@@ -90,18 +90,31 @@ Vulnerabilities
 --
 Vulnerabilities are specified in vulns.xml, these are the 'useable' vulnerabilities currently, so when specifing vulnerabilities in boxes.xml you must use from this list or leave the name blank. current automated vulnerabilities are:
 	
-  * ftp
-  * commandinjection
-  * nfs
-  * samba
-  * writeableshadow
-  * distcc
-  * ftpbackdoor
-  * sqlinjection
+	ftp
+	commandinjection
+    nfs
+    samba
+    writeableshadow
+    distcc
+    ftpbackdoor
+    sqlinjection
 
 Kali
 --
-A Kali image is built with every project, this is very slow and can be tedious, if you already have your own hack lab then you can remove this, but you will need to modify your IP address so it is on the network range, or modify networks.xml.
+A Kali image is built with every project, this is very slow and can be tedious, if you already have your own hack lab then you can remove this from vagrantbase.erb, but you will need to modify your IP address so it is on the network range, or modify networks.xml.
+
+Mount
+--
+the mount file contains all of the puppet information, ssh keys for the default kali image, along with files to be transfered during the installation phase, this is mounted to each machine but removed once the installation has completed.
+
+Cleanup
+--
+After each system is installed, the systems will clean up after itself.
+
+	Removes internet access to each host
+	unmounting the /mount/
+	clober files to all look like they were installed in 2006  
+	change vagrant password 
 
 Contributing
 --
